@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-
+import 'element-ui/lib/theme-chalk/index.css'
+import './plugins/element'
 Vue.config.productionTip = false
-
+import axios from 'axios'
+Vue.use(axios)
+Vue.prototype.$http = axios
+    // 配置请求额根路径
+axios.defaults.baseURL = 'http://tagapi.whip1ash.cn/'
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')
