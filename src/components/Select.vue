@@ -9,7 +9,7 @@
   </div>
     </div>
     <div class="btn">
-        <el-button type="primary" round>apply</el-button>
+   
         <el-button type="primary" round>save</el-button>
         <el-button type="primary" round>next</el-button>
        
