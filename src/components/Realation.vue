@@ -50,9 +50,11 @@
 </template>
 
 <script>
+import func from '../../vue-temp/vue-editor-bridge';
 export default {
     data() {
         return {
+            entities: [],
             centerDialogVisible: false,
             tableData: [{
                     date: '2016-05-02',
@@ -95,6 +97,8 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
+                // todo 这里调用删除逻辑、
+                // delete();
                 this.$message({
                     type: 'success',
                     message: '删除成功!'
@@ -105,6 +109,57 @@ export default {
                     message: '已取消删除'
                 });
             });
+        },
+        list(){
+            let self = this;
+            let post_data = {page:0,limit:10};
+            this.$http.post("/Entity/List",post_data)
+                .catch(function (error) {
+                    //todo: 错误处理
+                    console.log(error);
+                })
+                .then(function (resp) {
+                    if(resp.data.success){
+                        self.entities = resp.data.data;
+
+                        //{"id": 19, "sentence_id_id": 2, "pos": "3,8", "entity": "asdfasddddddfsadf", "type_id": 11}
+                    }else{
+                        //todo: 错误处理
+                        console.log(resp.data.msg)
+                    }
+                })
+        },
+        delete(id){
+            let self = this;
+            let post_data = {"id":id};
+            this.$http.post("/entity/DelType",post_data)
+                .catch(function (error) {
+                    //todo: 错误处理
+                    console.log(error);
+                })
+                .then(function (resp) {
+                    if(resp.data.success){
+                        // 删除成功
+                        // {"success": true, "msg": "Delete entity type success!", "code": 0, "data": ""}
+                    }else{
+                        //todo: 错误处理
+                        console.log(resp.data.msg)
+                    }
+                })
+        },
+        //edit接口需要输入的内容如下
+        // {"tag_id":19,"sentence_id":2,"pos":"3,8","entity":"asdfasddddddfsadf","type":11}
+        // 就是list接口获得的内容，启动tag_id 对应list接口的响应数据的id。type对应type_id。
+        edit(tag_id,sentence_id,pos,entity,type){
+            let self = this;
+            let post_data = {"tag_id":tag_id,"sentence_id":sentence_id,"pos":pos,"entity":entity,"type":type};
+            this.$http.post("/entity/Save",post_data)
+                .catch(function (error) {
+                    //todo:...
+                })
+                .then(function (resp) {
+                    // todo:...
+                })
         }
     }
 

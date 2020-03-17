@@ -10,9 +10,10 @@
             </div>
             <div>
                 <ul>
-                    <li><span class="id">0</span><span class="content">nothing is impossible</span></li>
-                    <li><span class="id">1</span><span class="content">nothing is impossible</span></li>
-                    <li><span class="id">2</span><span class="content">nothing is impossible</span></li>
+                    <li v-for="sentence in sentencesDone" :key="sentence.kid">
+                        <span class="id">{{sentence.id}}</span>
+                        <span class="content">{{sentence.content}}</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -23,9 +24,10 @@
             </div>
             <div>
                 <ul>
-                    <li><span class="id">2</span><span class="content">nothing is impossible</span></li>
-                    <li><span class="id">59</span><span class="content">nothing is impossible</span></li>
-                    <li><span class="id">63</span><span class="content">nothing is impossible</span></li>
+                    <li v-for="sentence in sentencesDoing" :key="sentence.kid">
+                        <span class="id">{{sentence.id}}</span>
+                        <span class="content">{{sentence.content}}</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -36,13 +38,56 @@
 
 <script>
 export default {
+    data(){
+            return {
+                sentencesDoing: [],
+                sentencesDone: [],
+            }
+        },
+    created(){
+        this.listEntitySentencesDone();
+        this.listEntitySentencesDoing();
+    },
     methods: {
         handleChang() {
             this.$router.push('/realation')
         },
         handleChangex() {
             this.$router.push('/select')
-        }
+        },
+        listEntitySentencesDoing(){
+            let self = this;
+            let post_data = { referer: 'entity', page: 0, limit: 10 };
+            this.$http.post('/Sentence/Doing',post_data)
+                .catch(function (error){
+                    // todo: 是否需要封装错误处理逻辑？ 弹一个框或者什么方式提示一下错误？
+                    consle.log(error);
+                })
+                .then(function (resp){
+                    if(resp.data.success){
+                        self.sentencesDoing = resp.data.data;
+                    }else{
+                        // todo :错误处理
+                        console.log(resp.data.msg)
+                    }
+                })
+        },
+        listEntitySentencesDone(){
+            let self = this;
+            let post_data = { referer: 'entity', page: 0, limit: 10 };
+            this.$http.post('/Sentence/Done',post_data)
+                .catch(function (error){
+                    // todo: 是否需要封装错误处理逻辑？弹一个框或者什么方式提示一下错误？
+                    consle.log(error);
+                })
+                .then(function (resp){
+                    if(resp.data.success){
+                        self.sentencesDone = resp.data.data;
+                    }else{
+                        console.log(resp.data.msg)
+                    }
+                })
+        },
     }
 }
 </script>
