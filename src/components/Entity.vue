@@ -1,12 +1,13 @@
 <template>
 <div>
     <el-button type="primary" class="start btn" @click="handleChangex">开始打标</el-button>
+  <el-button type="primary" class="view btn" @click="handleChangey">查看类型</el-button>
     <el-button type="primary" class="history btn" @click="handleChang">历史数据</el-button>
     <div class="box">
         <div class="box1">
             <div class="title">
                 <span id="idTitle">ID</span>
-                <h4 class="done">已打标的句子</h4>
+                <h4 class="done">已打标的句子</h4>y
             </div>
             <div>
                 <ul>
@@ -55,6 +56,9 @@ export default {
         handleChangex() {
             this.$router.push('/select')
         },
+        handleChangey(){
+             this.$router.push('/viewlist')
+        },
       async listEntitySentencesDoing(){
             // let self = this;
             let post_data = { referer: 'entity', page: 0, limit: 10 };
@@ -82,8 +86,7 @@ export default {
             let post_data = { referer: 'entity', page: 0, limit: 10 };
               const resp= await this.$http.post('/Sentence/Done',post_data)
                 // .catch(function (error){
-                //     // todo: 是否需要封装错误处理逻辑？弹一个框或者什么方式提示一下错误？
-                //     this.$message.error('出现错误了,请重试')
+                //     // todo: 是否需要封装错误处理逻辑？弹一个框或者什么方式提示一下
                 //     consle.log(error);
                 // })
                 // .then(function (resp){
@@ -109,7 +112,10 @@ export default {
     /* top: -180px; */
     left: -240px
 }
-
+.view{
+    position: relative;
+    left: -20px
+}
 .history {
     position: relative;
     /* top: -180px; */
