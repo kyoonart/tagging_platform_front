@@ -18,8 +18,8 @@ export default {
 
 <style>
 .container {
-    width: 80%;
-    height: 500px;
+    width: 90%;
+    height: 700px;
     position: absolute;
     top: 0;
     bottom: 0;

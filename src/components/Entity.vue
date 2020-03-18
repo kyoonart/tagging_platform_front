@@ -5,7 +5,7 @@
     <div class="box">
         <div class="box1">
             <div class="title">
-                <span id="idTitle">id</span>
+                <span id="idTitle">ID</span>
                 <h4 class="done">已打标的句子</h4>
             </div>
             <div>
@@ -19,7 +19,7 @@
         </div>
         <div class="box2">
             <div class="title">
-                <span id="idTitle">id</span>
+                <span id="idTitle">ID</span>
                 <h4 class="undone">未打标的句子</h4>
             </div>
             <div>
@@ -55,38 +55,45 @@ export default {
         handleChangex() {
             this.$router.push('/select')
         },
-        listEntitySentencesDoing(){
-            let self = this;
+      async listEntitySentencesDoing(){
+            // let self = this;
             let post_data = { referer: 'entity', page: 0, limit: 10 };
-            this.$http.post('/Sentence/Doing',post_data)
-                .catch(function (error){
-                    // todo: 是否需要封装错误处理逻辑？ 弹一个框或者什么方式提示一下错误？
-                    consle.log(error);
-                })
-                .then(function (resp){
-                    if(resp.data.success){
-                        self.sentencesDoing = resp.data.data;
+            const resp = await this.$http.post('/Sentence/Doing',post_data)
+                // .catch(function (error){
+                //     // todo: 是否需要封装错误处理逻辑？ 弹一个框或者什么方式提示一下错误？
+                //     // ok solve
+                //      this.$message.error('出现错误了,请重试');
+                //     consle.log(error);
+                // })
+                // .then(function (resp){
+         if(resp.data.success){
+            this.sentencesDoing = resp.data.data;
                     }else{
                         // todo :错误处理
+                        // ok solved
+                        //  this.$message.error('resp.data.msg');
                         console.log(resp.data.msg)
+                         this.$message.error('resp.data.msg')
                     }
-                })
+                // })
         },
-        listEntitySentencesDone(){
-            let self = this;
+       async listEntitySentencesDone(){
+            // let self = this;
             let post_data = { referer: 'entity', page: 0, limit: 10 };
-            this.$http.post('/Sentence/Done',post_data)
-                .catch(function (error){
-                    // todo: 是否需要封装错误处理逻辑？弹一个框或者什么方式提示一下错误？
-                    consle.log(error);
-                })
-                .then(function (resp){
+              const resp= await this.$http.post('/Sentence/Done',post_data)
+                // .catch(function (error){
+                //     // todo: 是否需要封装错误处理逻辑？弹一个框或者什么方式提示一下错误？
+                //     this.$message.error('出现错误了,请重试')
+                //     consle.log(error);
+                // })
+                // .then(function (resp){
                     if(resp.data.success){
-                        self.sentencesDone = resp.data.data;
+                        //   console.log(resp.data.msg)
+                        this.sentencesDone = resp.data.data;
                     }else{
-                        console.log(resp.data.msg)
+                       this.$message.error('出现错误了,请重试')
                     }
-                })
+                // })
         },
     }
 }
@@ -132,7 +139,7 @@ ul li:nth-child(1) {
 .box1 #idTitle,
 .box2 #idTitle {
     position: relative;
-    left: -379px
+    left: -430px
 }
 
 ul li .content {
