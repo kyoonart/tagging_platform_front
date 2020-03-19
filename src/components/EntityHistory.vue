@@ -10,23 +10,23 @@
     </el-dialog>
     <template>
   <el-table
-    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+    :data="entities.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
     style="width: 100%">
     <el-table-column
       label="ID"
-      prop="date">
+      prop="id">
     </el-table-column>
     <el-table-column
       label="Content"
-      prop="name">
+      prop="sen_content">
     </el-table-column>
      <el-table-column
       label="标注实体"
-      prop="date">
+      prop="entity">
     </el-table-column>
      <el-table-column
       label="实体类型"
-      prop="date">
+      prop="type">
     </el-table-column>
     <el-table-column
       align="right">
@@ -49,35 +49,11 @@ export default {
         return {
             entities: [],
             centerDialogVisible: false,
-            tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎上海市普陀区金沙江路',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                },
-                {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }
-            ],
             search: ''
         }
+    },
+    created() {
+        this.list();
     },
     methods: {
         handleEdit(index, row) {
@@ -85,16 +61,17 @@ export default {
             console.log(index, row);
         },
         handleDelete(index, row) {
-            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            this.$confirm('此操作将永久删除该标记, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
                 // todo 这里调用删除逻辑、
-                // delete();
+                // console.log(row.id);
+                this.delete(row.id);
                 this.$message({
                     type: 'success',
-                    message: '删除成功!'
+                    message: "删除成功"
                 });
             }).catch(() => {
                 this.$message({
@@ -103,9 +80,7 @@ export default {
                 });
             });
         },
-        created() {
-            this.list()
-        },
+
         async list() {
             let post_data = { page: 0, limit: 10 };
             const resp = await this.$http.post("/Entity/List", post_data)
@@ -113,26 +88,19 @@ export default {
                 this.entities = resp.data.data;
                 //{"id": 19, "sentence_id_id": 2, "pos": "3,8", "entity": "asdfasddddddfsadf", "type_id": 11}
             } else {
-                //todo: 错误处理
-                console.log(resp.data.msg)
-                this.$message.error('resp.data.msg');
+                console.log(resp.data);
+                this.$message.error(resp.data.msg);
             }
         },
-      async  delete(id) {
+        async  delete(id) {
             let self = this;
             let post_data = { "id": id };
-            const resp=await this.$http.post("/entity/DelType", post_data) 
-                    if (resp.data.success) {
-                        // 删除成功
-                        // {"success": true, "msg": "Delete entity type success!", "code": 0, "data": ""}
-                    } else {
-                        //todo: 错误处理
-                        console.log(resp.data.msg)
-                        this.$message.error('resp.data.msg');
-                    }
-              
+            const resp=await this.$http.post("/Entity/Del", post_data); 
+            if (!resp.data.success) {
+                this.$message.error(resp.data.msg);
+            }
         },
-        //edit接口需要输入的内容如下
+        //edit接口需要输入的内容如下 tag的edit接口
         // {"tag_id":19,"sentence_id":2,"pos":"3,8","entity":"asdfasddddddfsadf","type":11}
         // 就是list接口获得的内容，启动tag_id 对应list接口的响应数据的id。type对应type_id。
         edit(tag_id, sentence_id, pos, entity, type) {

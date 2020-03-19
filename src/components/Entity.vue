@@ -7,7 +7,7 @@
         <div class="box1">
             <div class="title">
                 <span id="idTitle">ID</span>
-                <h4 class="done">已打标的句子</h4>y
+                <h4 class="done">已打标的句子</h4>
             </div>
             <div>
                 <ul>
@@ -51,53 +51,34 @@ export default {
     },
     methods: {
         handleChang() {
-            this.$router.push('/realation')
+            this.$router.push('/entityHistory')
         },
         handleChangex() {
-            this.$router.push('/select')
+            this.$router.push('/taggingEntity')
         },
         handleChangey(){
-             this.$router.push('/viewlist')
+             this.$router.push('/entityType')
         },
-      async listEntitySentencesDoing(){
-            // let self = this;
+        async listEntitySentencesDoing(){
             let post_data = { referer: 'entity', page: 0, limit: 10 };
             const resp = await this.$http.post('/Sentence/Doing',post_data)
-                // .catch(function (error){
-                //     // todo: 是否需要封装错误处理逻辑？ 弹一个框或者什么方式提示一下错误？
-                //     // ok solve
-                //      this.$message.error('出现错误了,请重试');
-                //     consle.log(error);
-                // })
-                // .then(function (resp){
-         if(resp.data.success){
-            this.sentencesDoing = resp.data.data;
-                    }else{
-                        // todo :错误处理
-                        // ok solved
-                        //  this.$message.error('resp.data.msg');
-                        console.log(resp.data.msg)
-                         this.$message.error('resp.data.msg')
-                    }
-                // })
+            if(resp.data.success){
+                this.sentencesDoing = resp.data.data;
+            }else{
+                this.$message.error(resp.data.msg);
+                console.log(resp.data);
+            }
         },
-       async listEntitySentencesDone(){
-            // let self = this;
+        async listEntitySentencesDone(){
             let post_data = { referer: 'entity', page: 0, limit: 10 };
-              const resp= await this.$http.post('/Sentence/Done',post_data)
-                // .catch(function (error){
-                //     // todo: 是否需要封装错误处理逻辑？弹一个框或者什么方式提示一下
-                //     consle.log(error);
-                // })
-                // .then(function (resp){
-                    if(resp.data.success){
-                        //   console.log(resp.data.msg)
-                        this.sentencesDone = resp.data.data;
-                    }else{
-                       this.$message.error('出现错误了,请重试')
-                    }
-                // })
-        },
+            const resp= await this.$http.post('/Sentence/Done',post_data)
+            if(resp.data.success){
+                this.sentencesDone = resp.data.data;
+            }else{
+                console.log(resp.data);
+                this.$message.error(resp.data.msg);
+            }
+            },
     }
 }
 </script>

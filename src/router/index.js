@@ -3,10 +3,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Entity from '../components/Entity.vue'
-import Realation from '../components/EntityHistory.vue'
+import EntityHistory from '../components/EntityHistory.vue'
 import index from '../components/index.vue'
-import Select from '../components/Select.vue'
-import ViewList from '../components/ViewList.vue'
+import taggingEntity from '../components/TaggingEntity.vue'
+import EntityType from '../components/EntityType.vue'
 Vue.use(VueRouter)
 const routes = [{
         path: '/',
@@ -24,16 +24,16 @@ const routes = [{
                 path: '/entity',
                 component: Entity
             }, {
-                path: '/realation',
-                component: Realation
+                path: '/entityHistory',
+                component: EntityHistory
             },
             {
-                path: '/select',
-                component: Select
+                path: '/taggingEntity',
+                component: taggingEntity
             },
             {
-                path: '/viewlist',
-                component: ViewList
+                path: '/entityType',
+                component: EntityType
             }
         ]
     },

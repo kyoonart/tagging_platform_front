@@ -14,11 +14,11 @@
 </el-dialog>
     <template>
   <el-table
-    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+    :data="entityTypes.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
     style="width: 100%">
     <el-table-column
       label="ID"
-      prop="date">
+      prop="id">
     </el-table-column>
     <el-table-column
       label="Name"
@@ -44,44 +44,21 @@
 </template>
 <script>
 export default {
+    created (){
+            this.listEntityTypes();
+        },
     data() {
         return {
-            entities: [],
+            entityTypes: [],
             centerDialogVisible: false,
-            tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎上海市普陀区金沙江路',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                },
-                {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }
-            ],
             search: ''
         }
     },
     methods:{
-         handleEdit(index, row) {
+        handleEdit(index, row) {
             this.centerDialogVisible = true;
             console.log(index, row);
+            
         },
         handleDelete(index, row) {
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -89,8 +66,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                // todo 这里调用删除逻辑、
-                // delete();
+                this.delete(row.id);
                 this.$message({
                     type: 'success',
                     message: '删除成功!'
@@ -101,6 +77,23 @@ export default {
                     message: '已取消删除'
                 });
             });
+        },
+        async listEntityTypes() {
+            const resp= await this.$http.get('/Entity/ListType')
+            if(resp.data.success){
+                this.entityTypes = resp.data.data;
+            }else{
+                this.$message.error(resp.data.msg);
+                console.log(resp.data);
+            }
+        },
+        async delete(id) {
+            let self = this;
+            let post_data = { "id": id };
+            const resp=await this.$http.post("/Entity/DelType", post_data); 
+            if (!resp.data.success) {
+                this.$message.error(resp.data.msg);
+            }
         },
     }
     

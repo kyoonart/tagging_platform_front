@@ -28,14 +28,13 @@
     },
     methods:{
       async listEntityTypes() {
-      const resp= await this.$http.get('/Entity/ListType')
-              if(resp.data.success){
-                this.entityTypes = resp.data.data;
-              }else{
-                console.log(resp.data.msg)
-                this.$message.error('resp.data.msg')
-              }
-         
+        const resp= await this.$http.get('/Entity/ListType')
+        if(resp.data.success){
+          this.entityTypes = resp.data.data;
+        }else{
+          console.log(resp.data);
+          this.$message.error(resp.data.msg);
+        }
       },
      async getSentence(){
         let post_data = {referer:"entity"};
@@ -43,9 +42,8 @@
             if(resp.data.success){
               this.sentence = resp.data.data[0].content;
             }else{
-              //todo: 错误处理
-              console.log(resp.data.msg);
-              this.$message.error('resp.data.msg')
+              console.log(resp.data);
+              this.$message.error(resp.data.msg);
             }
       }
     }
