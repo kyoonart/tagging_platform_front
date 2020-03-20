@@ -2,6 +2,7 @@
 <div>
     <el-button type="primary" class="btn" @click="handleChange('/entity')">Entity</el-button>
     <el-button type="primary" class="btn" @click="handleChange('/realation')">Realation</el-button>
+    <el-button type="primary" class="btn" @click="handleChange('/sentence')">Sentence</el-button>
 </div>
 </template>
 <script>

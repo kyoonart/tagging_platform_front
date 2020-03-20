@@ -16,17 +16,17 @@
 
     <!-- 编辑弹框 -->
     <el-dialog title="请修改" :visible.sync="centerDialogVisible" width="30%" center>
-        <el-form :label-position="labelPosition" label-width="80px" :model="editformLabelAlign">
+        <el-form :label-position="labelPosition" :rules="addRules"  ref="addFormRef" label-width="80px" :model="formLabelAlign">
             <!-- <el-form-item label="ID">
                 <el-input v-model="editformLabelAlign.id"></el-input>
             </el-form-item> -->
             <el-form-item label="Name">
-                <el-input v-model="editformLabelAlign.name"></el-input>
+                <el-input v-model="formLabelAlign.name"></el-input>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click='editFinish'>确 定</el-button>
   </span>
     </el-dialog>
     <template>
@@ -72,21 +72,15 @@ export default {
             labelPosition: 'right',
             formLabelAlign: {
                 name: '',
-                region: '',
+                id: '',
 
-            },
-            editformLabelAlign: {
-                // id: '',
-                name: '',
-                region: '',
             },
             addForm: {
                 name: '',
-
             },
             addRules: {
                 name: [{ required: true, message: '请输入Name,必须是字母', trigger: 'blur' },
-                    { min: 0, max: 10, message: '长度在 0到 10个字母', trigger: 'blur' }
+                    { min: 0, max: 100, message: '长度在 0到 100个字母', trigger: 'blur' }
                 ]
             }
         }
@@ -94,11 +88,20 @@ export default {
     methods: {
         handleEdit(index, row) {
             this.centerDialogVisible = true;
-            // this.editformLabelAlign.id = row.id
-            this.editformLabelAlign.name = row.name
-            // 处理Edit逻辑
-              this.listEntityTypes()
-            console.log(index, row);
+            this.formLabelAlign.name = row.name;
+            this.formLabelAlign.id = row.id;
+        },
+        editFinish(){
+            this.$refs.addFormRef.validate((valid) => {
+                if (!valid) { return }
+                // 表单验证成功
+                this.centerDialogVisible = false
+
+                // invoke edit 
+                this.edit(this.formLabelAlign.id,this.formLabelAlign.name);
+                this.$message.success('修改成功');
+                this.$refs.addFormRef.resetFields();
+            })
         },
         handleDelete(index, row) {
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -117,7 +120,6 @@ export default {
                     message: '已取消删除'
                 });
             });
-            this.delete(row.id)
         },
         handleAdd() {
             this.addDialogVisible = true
@@ -127,8 +129,11 @@ export default {
                 if (!valid) { return }
                 // 表单验证成功
                 this.addDialogVisible = false
-                // 刷新列表
-                this.listEntityTypes()
+
+                console.log(this.formLabelAlign.name);
+                // invoke add 
+                this.add(this.formLabelAlign.name);
+                
                 //  to do 调用添加事件函数
                 this.$message.success('添加成功');
                 this.$refs.addFormRef.resetFields();
@@ -147,11 +152,30 @@ export default {
             let self = this;
             let post_data = { "id": id };
             const resp = await this.$http.post("/Entity/DelType", post_data);
-            this.listEntityTypes()
             if (!resp.data.success) {
                 this.$message.error(resp.data.msg);
             }
+            this.listEntityTypes();
         },
+        async add(name){
+            let self = this;
+            let post_data = {"type":name};
+            const resp = await this.$http.post("/Entity/AddType", post_data);
+            if (!resp.data.success) {
+                this.$message.error(resp.data.msg);
+            } 
+            // 刷新列表
+            this.listEntityTypes()
+        },
+        async edit(id,name){
+            let post_data = {'id':id,'type':name};
+            const resp = await this.$http.post("/Entity/EditType", post_data);
+            if (!resp.data.success) {
+                this.$message.error(resp.data.msg);
+            } 
+            // 刷新列表
+            this.listEntityTypes()
+        }
     }
 
 

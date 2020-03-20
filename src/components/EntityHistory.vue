@@ -66,8 +66,6 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                // todo 这里调用删除逻辑、
-                // console.log(row.id);
                 this.delete(row.id);
                 this.$message({
                     type: 'success',
@@ -99,6 +97,7 @@ export default {
             if (!resp.data.success) {
                 this.$message.error(resp.data.msg);
             }
+            this.list();
         },
         //edit接口需要输入的内容如下 tag的edit接口
         // {"tag_id":19,"sentence_id":2,"pos":"3,8","entity":"asdfasddddddfsadf","type":11}

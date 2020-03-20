@@ -7,6 +7,7 @@ import EntityHistory from '../components/EntityHistory.vue'
 import index from '../components/index.vue'
 import TaggingEntity from '../components/TaggingEntity.vue'
 import EntityType from '../components/EntityType.vue'
+import Sentence from '../components/Sentence.vue'
 Vue.use(VueRouter)
 const routes = [{
         path: '/',
@@ -34,6 +35,10 @@ const routes = [{
             {
                 path: '/entityType',
                 component: EntityType
+            },
+            {
+                path: '/sentence',
+                component: Sentence
             }
         ]
     },
