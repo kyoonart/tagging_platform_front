@@ -5,7 +5,7 @@ import Home from '../views/Home.vue'
 import Entity from '../components/Entity.vue'
 import EntityHistory from '../components/EntityHistory.vue'
 import index from '../components/index.vue'
-import taggingEntity from '../components/TaggingEntity.vue'
+import TaggingEntity from '../components/TaggingEntity.vue'
 import EntityType from '../components/EntityType.vue'
 Vue.use(VueRouter)
 const routes = [{
@@ -28,8 +28,8 @@ const routes = [{
                 component: EntityHistory
             },
             {
-                path: '/taggingEntity',
-                component: taggingEntity
+                path: '/realation',
+                component: TaggingEntity
             },
             {
                 path: '/entityType',

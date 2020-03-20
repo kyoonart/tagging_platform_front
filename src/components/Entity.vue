@@ -54,7 +54,7 @@ export default {
             this.$router.push('/entityHistory')
         },
         handleChangex() {
-            this.$router.push('/taggingEntity')
+            this.$router.push('/realation')
         },
         handleChangey(){
              this.$router.push('/entityType')
