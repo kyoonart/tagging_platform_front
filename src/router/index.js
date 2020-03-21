@@ -2,11 +2,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Entity from '../components/Entity.vue'
-import EntityHistory from '../components/EntityHistory.vue'
 import index from '../components/index.vue'
-import TaggingEntity from '../components/TaggingEntity.vue'
+
+import Entity from '../components/Entity.vue'
 import EntityType from '../components/EntityType.vue'
+import EntityHistory from '../components/EntityHistory.vue'
+import TaggingEntity from '../components/TaggingEntity.vue'
+
+import Relation from '../components/Relation.vue'
+import RelationType from '../components/RelationType.vue'
+import RelationHistory from '../components/RelationHistory.vue'
+import TaggingRelation from '../components/TaggingRelation.vue'
+
 import Sentence from '../components/Sentence.vue'
 Vue.use(VueRouter)
 const routes = [{
@@ -29,16 +36,32 @@ const routes = [{
                 component: EntityHistory
             },
             {
-                path: '/realation',
-                component: TaggingEntity
-            },
-            {
                 path: '/entityType',
                 component: EntityType
             },
             {
                 path: '/sentence',
                 component: Sentence
+            },
+            {
+                path: '/taggingEntity',
+                component: TaggingEntity
+            },
+            {
+                path: '/relation',
+                component: Relation
+            },
+            {
+                path: '/relationType',
+                component: RelationType
+            },
+            {
+                path: '/relationHistory',
+                component: RelationHistory
+            },
+            {
+                path: '/taggingRelation',
+                component: TaggingRelation
             }
         ]
     },

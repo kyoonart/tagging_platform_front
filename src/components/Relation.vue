@@ -46,21 +46,21 @@ export default {
             }
         },
     created(){
-        this.listEntitySentencesDone();
-        this.listEntitySentencesDoing();
+        this.listRelationSentencesDone();
+        this.listRelationSentencesDoing();
     },
     methods: {
         handleChang() {
-            this.$router.push('/entityHistory')
+            this.$router.push('/relationHistory')
         },
         handleChangex() {
-            this.$router.push('/taggingEntity')
+            this.$router.push('/taggingRelation')
         },
         handleChangey(){
-             this.$router.push('/entityType')
+             this.$router.push('/relationType')
         },
-        async listEntitySentencesDoing(){
-            let post_data = { referer: 'entity', page: 0, limit: 10 };
+        async listRelationSentencesDoing(){
+            let post_data = { referer: 'relation', page: 0, limit: 10 };
             const resp = await this.$http.post('/Sentence/Doing',post_data)
             if(resp.data.success){
                 this.sentencesDoing = resp.data.data;
@@ -69,8 +69,8 @@ export default {
                 console.log(resp.data);
             }
         },
-        async listEntitySentencesDone(){
-            let post_data = { referer: 'entity', page: 0, limit: 10 };
+        async listRelationSentencesDone(){
+            let post_data = { referer: 'relation', page: 0, limit: 10 };
             const resp= await this.$http.post('/Sentence/Done',post_data)
             if(resp.data.success){
                 this.sentencesDone = resp.data.data;
