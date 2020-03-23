@@ -5,12 +5,20 @@
         <el-tag class="tag" v-for=" (tag,index) in Lsentence" :key="tag" @click="handleSelect(tag,index)">
             {{tag}}
         </el-tag>
+        <br>
+        <el-tag v-for="(tag,index) in selected" :key="tag.name" type="success" closable @close="handleClose(tag,index)">
+            {{tag.name}}
+        </el-tag>
+
     </div>
     <div class="box2">
         <div style="margin-top: 20px">
-            <el-tag v-for="tag in tags" :key="tag.name" closable type="success" @close="handleClose(tag.id)">
-                {{tag.name}}
-            </el-tag>
+
+            <el-checkbox-group v-model="asd" :max="1">
+                <el-checkbox-button v-for=" tag in tags" :label="tag.name" :key="tag.name" @change="handleChange(tag)">
+                    {{tag.name}}</el-checkbox-button>
+            </el-checkbox-group>
+
         </div>
     </div>
     <div class="btn">
@@ -27,9 +35,12 @@ export default {
             sentence: '',
             tags: [],
             Lsentence: [],
-            sentence_id:0,
-            pos:'',
-            type:0
+            sentence_id: 0,
+            pos: '',
+            type: 0,
+            asd: ['circuiz'],
+            selected: [],
+
         };
 
     },
@@ -38,13 +49,20 @@ export default {
         this.listEntityTypes();
     },
     methods: {
-        handleClose(id) {
-            let result = this.tags.filter(item => {
-                return item['id'] !== id
+        handleClose(tag) {
+            console.log(tag);
+            let result = this.selected.filter(item => {
+                return item['id'] !== tag.id
             })
-            this.tags = result;
+            this.selected = result;
+        },
+        handleChange(tag) {
+            // 这里可以拿到选中的标
+            console.log(tag);
+
         },
         handleSelect(tag, index) {
+            // 选到的单词
             let list = this.sentence.split(' ');
             let start = 0
             for (let i = 0; i < index; i++) {
@@ -58,24 +76,23 @@ export default {
                 y: tag.length + start - 1
             }
             var name = tag.replace(/[, , .]/g, "")
-
             var obj = {
                 id: index,
                 name: name
             }
-            let count=0
-            for (let i = 0; i < this.tags.length; i++) {
-                console.log(this.tags[i].id);
-                if (this.tags[i].id===index){
-                    this.$message.error('请勿重复打标');
+            let count = 0
+            for (let i = 0; i < this.selected.length; i++) {
+                console.log(this.selected[i].id);
+                if (this.selected[i].id === index) {
+                    this.$message.error('请勿重复选择');
                     count++
                 }
             }
-            if(count===0){
-                 this.tags.push(obj);
+            if (count === 0) {
+                this.selected.push(obj);
             }
         },
-        handleSave(){
+        handleSave() {
             // let query={
             //   sentence_id:
             // }
@@ -94,7 +111,7 @@ export default {
             const resp = await this.$http.post('/Sentence/Get', post_data)
             if (resp.data.success) {
                 console.log(resp.data.data);
-                
+
                 this.sentence = resp.data.data[0].content;
                 this.Lsentence = resp.data.data[0].content.split(' ')
             } else {
@@ -108,7 +125,7 @@ export default {
 <style scoped>
 .box1 {
     width: 80%;
-    height: 150px;
+    height: 300px;
     border: 1px solid #ccc;
     background-color: #fff;
     margin: 0 auto
@@ -116,7 +133,7 @@ export default {
 
 .box2 {
     width: 80%;
-    height: 200px;
+    height: 100px;
     border: 1px solid #ccc;
     background-color: #fff;
     margin: 10px auto
@@ -124,11 +141,13 @@ export default {
 
 .el-tag {
     margin-right: 5px;
-    cursor: pointer
+    cursor: pointer;
+    margin-top: 20px
 }
 
 .tag {
     margin-top: 20px;
     margin-right: 2px
 }
+
 </style>
