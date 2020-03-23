@@ -4,15 +4,14 @@
         <el-header>Header</el-header>
         <el-main>
             <router-view></router-view>
-          </el-main>
-        
+        </el-main>
     </el-container>
 </div>
 </template>
 
 <script>
 export default {
-  
+
 }
 </script>
 
@@ -26,6 +25,11 @@ export default {
     right: 0;
     left: 0;
     margin: auto
+}
+
+.el-header {
+    height: 40px !important;
+    line-height: 40px !important
 }
 
 .el-header,

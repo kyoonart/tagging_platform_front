@@ -3,17 +3,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import index from '../components/index.vue'
-
 import Entity from '../components/Entity.vue'
 import EntityType from '../components/EntityType.vue'
 import EntityHistory from '../components/EntityHistory.vue'
 import TaggingEntity from '../components/TaggingEntity.vue'
-
 import Relation from '../components/Relation.vue'
 import RelationType from '../components/RelationType.vue'
 import RelationHistory from '../components/RelationHistory.vue'
 import TaggingRelation from '../components/TaggingRelation.vue'
-
 import Sentence from '../components/Sentence.vue'
 Vue.use(VueRouter)
 const routes = [{
