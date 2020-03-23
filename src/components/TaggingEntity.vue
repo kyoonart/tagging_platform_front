@@ -14,10 +14,14 @@
     <div class="box2">
         <div style="margin-top: 20px">
 
-            <el-checkbox-group v-model="asd" :max="1">
+            <!-- <el-checkbox-group v-model="asd" :max="1">
                 <el-checkbox-button v-for=" tag in tags" :label="tag.name" :key="tag.name" @change="handleChange(tag)">
                     {{tag.name}}</el-checkbox-button>
-            </el-checkbox-group>
+            </el-checkbox-group> -->
+     <el-radio-group v-model="asd">
+      <el-radio-button  v-for=" tag in tags" :label="tag.name" :key="tag.name" @change="handleChange(tag)">{{tag.name}}</el-radio-button>
+    
+    </el-radio-group>
 
         </div>
     </div>

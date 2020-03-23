@@ -4,8 +4,11 @@ import { Form, FormItem, Card, Row, Col, CheckboxGroup, Checkbox } from 'element
 import { Input, Container, Aside, Main, Header, Menu, MenuItem, Submenu } from 'element-ui'
 import { Breadcrumb, BreadcrumbItem, Table, TableColumn, Switch, Tooltip } from 'element-ui'
 // 导入弹框提示 
-import { Message, Dialog, Pagination, MessageBox, Tag, CheckboxButton, Select, Option, Cascader, Tabs, TabPane, Step, Steps } from 'element-ui'
+import { Message, Dialog, Pagination, MessageBox, Tag, Radio, RadioGroup, RadioButton, CheckboxButton, Select, Option, Cascader, Tabs, TabPane, Step, Steps } from 'element-ui'
 Vue.use(Button)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(RadioButton)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
