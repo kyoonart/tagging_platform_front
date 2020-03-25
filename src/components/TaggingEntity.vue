@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="box1">
-       <input @click="getTextIndex"  v-model="sentence"  style="width:600px"/>
+       <input @click="getTextIndex"   v-model="sentence" />
     </div>
     <div class="box2">
         <div style="margin-top: 20px">
@@ -164,8 +164,22 @@ export default {
     margin-right: 2px
 }
 input {
-    width: 1000px!important;
-    height: 40px
+    background-color: #FFF;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
 }
 
 </style>
