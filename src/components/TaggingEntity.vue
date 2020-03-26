@@ -3,18 +3,27 @@
     <div class="box1">
        <textarea  @click="getTextIndex"   v-model="sentence" />
     </div>
+
     <div class="box2">
         <div style="margin-top: 20px">
-     <el-radio-group v-model="asd" @change="handleChange">
-      <el-radio-button  v-for=" tag in tags" :label="tag.name"  :key="tag.name"  >
-          {{tag.name}}
+            <el-tag v-for="(result,index) in results" :key="result.id" type="success" closable @close="handleClose(result,index)">
+            {{result.entity}}
+        </el-tag>
+        </div>
+    </div>
+
+    <div class="box2">
+        <div style="margin-top: 20px">
+     <el-radio-group v-model="padding" @change="handleSelectType">
+      <el-radio-button  v-for=" type in entityTypes" :label="type.id"  :key="type.name"  >
+          {{type.name}}
           </el-radio-button>
     </el-radio-group>
         </div>
     </div>
     <div class="btn">
         <el-button type="primary" round @click='handleSave'>save</el-button>
-        <el-button type="primary" round>next</el-button>
+        <el-button type="primary" round @click="getSentence">next</el-button>
     </div>
 </div>
 </template>
@@ -22,15 +31,15 @@
 export default {
     data() {
         return {
+
             entityTypes: [],
+            padding: [],
+
             sentence: '',
-            tags: [],
-            Lsentence: [],
             sentence_id: 0,
             pos: '',
-            type: 0,
-            asd: ['circuiz'],
-            selected: [],
+            results: [],
+            order: 0
 
         };
 
@@ -40,14 +49,15 @@ export default {
         this.listEntityTypes();
     },
     methods: {
-         getTextIndex (e) {
-            let target = e.target, index;
+        getTextIndex (e) {
+            let target = e.target, start;
             if (target.selectionStart != 'undefined') {
-                  index = target.selectionStart;
+                    start = target.selectionStart;
             } else {
-                  index = '0'
-             }        
+                    start = '0'
+                }        
             // console.log(index);
+<<<<<<< HEAD
             let start =index
            let selectedText= this.getSelectionText()
            let end=selectedText.length+index
@@ -64,32 +74,94 @@ export default {
              return selectedText;
         },
         handleChange(value) {
+=======
+            let selectedText= this.getSelectionText()
+            let end=selectedText.length+start
+
+            if(start == end){
+                return 0;
+            }
+
+            // selected object
+            var sel = {id: this.order,name: selectedText};
+
+            for (let i = 0; i < this.results.length; i++) {
+                if (this.results[i].entity === selectedText) {
+                    this.$message.error('请勿重复选择');
+                    return 0;
+                }
+            }
+            
+            this.results.push({
+                id: this.order,
+                sentence_id: this.sentence_id,
+                entity: selectedText, 
+                pos: `${start},${end}`
+            });
+            this.order++;
+
+            console.log(this.results)
+           
+        },
+
+        getSelectionText() {
+            let selectedText=''
+            if(window.getSelection) {
+                selectedText= window.getSelection().toString();
+            } else if(document.selection && document.selection.createRange) {
+                selectedText= document.selection.createRange().text;
+            }
+            return selectedText;
+        },
+
+        handleClose(entity) {
+            let result = this.results.filter(item => {
+                return item['id'] !== entity.id
+            })
+            this.results = result
+            console.log(this.results)
+        },
+
+
+        handleSelectType(value) {
+>>>>>>> 4070d242ac26220cf84e8bacfad0f7195e9ffde9
             // 这里可以拿到选中的标
             console.log(value);
 
         },
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 4070d242ac26220cf84e8bacfad0f7195e9ffde9
         handleSave() {
             // let query={
             //   sentence_id:
             // }
         },
+        init(){
+            this.sentence = ''
+            this.sentence_id = 0
+            this.pos= '',
+            this.results= [],
+            this.order= 0
+        },
         async listEntityTypes() {
             const resp = await this.$http.get('/Entity/ListType')
             if (resp.data.success) {
-                this.tags = resp.data.data;
+                this.entityTypes = resp.data.data;
             } else {
                 console.log(resp.data);
                 this.$message.error(resp.data.msg);
             }
         },
         async getSentence() {
+            init();
             let post_data = { referer: "entity" };
             const resp = await this.$http.post('/Sentence/Get', post_data)
             if (resp.data.success) {
-                // console.log(resp.data.data);
-
                 this.sentence = resp.data.data[0].content;
-                this.Lsentence = resp.data.data[0].content.split(' ')
+                this.sentence_id = resp.data.data[0].id
             } else {
                 console.log(resp.data);
                 this.$message.error(resp.data.msg);
