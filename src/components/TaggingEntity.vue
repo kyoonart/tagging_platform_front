@@ -23,7 +23,7 @@
     </div>
     <div class="btn">
         <el-button type="primary" round @click='handleSave'>save</el-button>
-        <el-button type="primary" round>next</el-button>
+        <el-button type="primary" round @click="getSentence">next</el-button>
     </div>
 </div>
 </template>
@@ -118,15 +118,13 @@ export default {
             // }
         },
         init(){
-            sentence = ''
-            sentence_id = 0
-            pos: '',
-            results: [],
-            order: 0
+            this.sentence = ''
+            this.sentence_id = 0
+            this.pos= '',
+            this.results= [],
+            this.order= 0
         },
         async listEntityTypes() {
-            init();
-
             const resp = await this.$http.get('/Entity/ListType')
             if (resp.data.success) {
                 this.entityTypes = resp.data.data;
@@ -136,6 +134,7 @@ export default {
             }
         },
         async getSentence() {
+            init();
             let post_data = { referer: "entity" };
             const resp = await this.$http.post('/Sentence/Get', post_data)
             if (resp.data.success) {
