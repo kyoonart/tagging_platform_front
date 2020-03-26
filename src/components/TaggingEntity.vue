@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="box1">
-       <input @click="getTextIndex"   v-model="sentence" />
+       <textarea  @click="getTextIndex"   v-model="sentence" />
     </div>
     <div class="box2">
         <div style="margin-top: 20px">
@@ -48,9 +48,10 @@ export default {
                   index = '0'
              }        
             // console.log(index);
+            let start =index
            let selectedText= this.getSelectionText()
            let end=selectedText.length+index
-           console.log(`start:${index},end : ${end}, selected:${selectedText}`);
+           console.log(`start:${start},end : ${end}, selected:${selectedText}`);
            
        },
          getSelectionText() {
@@ -62,50 +63,11 @@ export default {
             }
              return selectedText;
         },
-
-        // handleClose(tag) {
-        //     console.log(tag);
-        //     let result = this.selected.filter(item => {
-        //         return item['id'] !== tag.id
-        //     })
-        //     this.selected = result;
-        // },
         handleChange(value) {
             // 这里可以拿到选中的标
             console.log(value);
 
         },
-        // handleSelect(tag, index) {
-        //     // 选到的单词
-        //     let list = this.sentence.split(' ');
-        //     let start = 0
-        //     for (let i = 0; i < index; i++) {
-        //         start += list[i].length
-        //     }
-        //     if (index !== 0) {
-        //         start = start + index
-        //     }
-        //     let pos = {
-        //         x: start,
-        //         y: tag.length + start - 1
-        //     }
-        //     var name = tag.replace(/[, , .]/g, "")
-        //     var obj = {
-        //         id: index,
-        //         name: name
-        //     }
-        //     let count = 0
-        //     for (let i = 0; i < this.selected.length; i++) {
-        //         console.log(this.selected[i].id);
-        //         if (this.selected[i].id === index) {
-        //             this.$message.error('请勿重复选择');
-        //             count++
-        //         }
-        //     }
-        //     if (count === 0) {
-        //         this.selected.push(obj);
-        //     }
-        // },
         handleSave() {
             // let query={
             //   sentence_id:
@@ -163,7 +125,8 @@ export default {
     margin-top: 20px;
     margin-right: 2px
 }
-input {
+textarea {
+    margin-top: 30px;
     background-color: #FFF;
     background-image: none;
     border-radius: 4px;
@@ -173,13 +136,15 @@ input {
     color: #606266;
     display: inline-block;
     font-size: inherit;
-    height: 40px;
-    line-height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 85px;
+    line-height: 30px;
     outline: 0;
     padding: 0 15px;
     -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-    width: 100%;
+    width: 80%;
+    resize:none
 }
 
 </style>
