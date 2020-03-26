@@ -1,24 +1,24 @@
 <template>
 <div>
     <div class="box1">
-       <textarea  @click="getTextIndex"   v-model="sentence" />
+        <textarea @click="getTextIndex" v-model="sentence" />
     </div>
 
     <div class="box2">
         <div style="margin-top: 20px">
             <el-tag v-for="(result,index) in results" :key="result.id" type="success" closable @close="handleClose(result,index)">
-            {{result.entity}}
-        </el-tag>
+                {{result.entity}}
+            </el-tag>
         </div>
     </div>
 
     <div class="box2">
         <div style="margin-top: 20px">
-     <el-radio-group v-model="padding" @change="handleSelectType">
-      <el-radio-button  v-for=" type in entityTypes" :label="type.id"  :key="type.name"  >
-          {{type.name}}
-          </el-radio-button>
-    </el-radio-group>
+            <el-radio-group v-model="padding" @change="handleSelectType">
+                <el-radio-button v-for=" type in entityTypes" :label="type.id" :key="type.name">
+                    {{type.name}}
+                </el-radio-button>
+            </el-radio-group>
         </div>
     </div>
     <div class="btn">
@@ -49,41 +49,38 @@ export default {
         this.listEntityTypes();
     },
     methods: {
-        getTextIndex (e) {
-            let target = e.target, start;
+        getTextIndex(e) {
+            let target = e.target,
+                start;
             if (target.selectionStart != 'undefined') {
-                    start = target.selectionStart;
+                start = target.selectionStart;
             } else {
-                    start = '0'
-                }        
-            // console.log(index);
-<<<<<<< HEAD
-            let start =index
-           let selectedText= this.getSelectionText()
-           let end=selectedText.length+index
-           console.log(`start:${start},end : ${end}, selected:${selectedText}`);
-           
-       },
-         getSelectionText() {
-           let selectedText=''
-            if(window.getSelection) {
-            selectedText= window.getSelection().toString();
-            } else if(document.selection && document.selection.createRange) {
-            selectedText= document.selection.createRange().text;
-            }
-             return selectedText;
-        },
-        handleChange(value) {
-=======
-            let selectedText= this.getSelectionText()
-            let end=selectedText.length+start
+                start = '0'
+            }
+            start = index;
+            let selectedText = this.getSelectionText()
+            let end = selectedText.length + index
+            console.log(`start:${start},end : ${end}, selected:${selectedText}`);
 
-            if(start == end){
+        },
+         getSelectionText() {
+            let selectedText = ''           
+            if (window.getSelection) {       
+                selectedText = window.getSelection().toString();        
+            } else if (document.selection && document.selection.createRange) {            selectedText = document.selection.createRange().text;            }       
+            return selectedText;       
+        },
+        handleChange(value) {
+
+            let selectedText = this.getSelectionText()
+            let end = selectedText.length + start
+
+            if (start == end) {
                 return 0;
             }
 
             // selected object
-            var sel = {id: this.order,name: selectedText};
+            var sel = { id: this.order, name: selectedText };
 
             for (let i = 0; i < this.results.length; i++) {
                 if (this.results[i].entity === selectedText) {
@@ -91,25 +88,23 @@ export default {
                     return 0;
                 }
             }
-            
+
             this.results.push({
                 id: this.order,
                 sentence_id: this.sentence_id,
-                entity: selectedText, 
+                entity: selectedText,
                 pos: `${start},${end}`
             });
             this.order++;
 
             console.log(this.results)
-           
         },
-
         getSelectionText() {
-            let selectedText=''
-            if(window.getSelection) {
-                selectedText= window.getSelection().toString();
-            } else if(document.selection && document.selection.createRange) {
-                selectedText= document.selection.createRange().text;
+            let selectedText = ''
+            if (window.getSelection) {
+                selectedText = window.getSelection().toString();
+            } else if (document.selection && document.selection.createRange) {
+                selectedText = document.selection.createRange().text;
             }
             return selectedText;
         },
@@ -124,27 +119,22 @@ export default {
 
 
         handleSelectType(value) {
->>>>>>> 4070d242ac26220cf84e8bacfad0f7195e9ffde9
             // 这里可以拿到选中的标
             console.log(value);
 
         },
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 4070d242ac26220cf84e8bacfad0f7195e9ffde9
         handleSave() {
             // let query={
             //   sentence_id:
             // }
         },
-        init(){
+        init() {
             this.sentence = ''
             this.sentence_id = 0
-            this.pos= '',
-            this.results= [],
-            this.order= 0
+            this.pos = '',
+                this.results = [],
+                this.order = 0
         },
         async listEntityTypes() {
             const resp = await this.$http.get('/Entity/ListType')
@@ -197,6 +187,7 @@ export default {
     margin-top: 20px;
     margin-right: 2px
 }
+
 textarea {
     margin-top: 30px;
     background-color: #FFF;
@@ -213,10 +204,9 @@ textarea {
     line-height: 30px;
     outline: 0;
     padding: 0 15px;
-    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    -webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
     width: 80%;
-    resize:none
+    resize: none
 }
-
 </style>

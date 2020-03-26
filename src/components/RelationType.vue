@@ -16,7 +16,7 @@
 
     <!-- 编辑弹框 -->
     <el-dialog title="请修改" :visible.sync="centerDialogVisible" width="30%" center>
-        <el-form :label-position="labelPosition" :rules="addRules"  ref="addFormRef" label-width="80px" :model="formLabelAlign">
+        <el-form :label-position="labelPosition" :rules="addRules" ref="addFormRef" label-width="80px" :model="formLabelAlign">
             <!-- <el-form-item label="ID">
                 <el-input v-model="editformLabelAlign.id"></el-input>
             </el-form-item> -->
@@ -91,14 +91,14 @@ export default {
             this.formLabelAlign.name = row.name;
             this.formLabelAlign.id = row.id;
         },
-        editFinish(){
+        editFinish() {
             this.$refs.addFormRef.validate((valid) => {
                 if (!valid) { return }
                 // 表单验证成功
                 this.centerDialogVisible = false
 
                 // invoke edit 
-                this.edit(this.formLabelAlign.id,this.formLabelAlign.name);
+                this.edit(this.formLabelAlign.id, this.formLabelAlign.name);
                 this.$message.success('修改成功');
                 this.$refs.addFormRef.resetFields();
             })
@@ -133,7 +133,7 @@ export default {
                 console.log(this.formLabelAlign.name);
                 // invoke add 
                 this.add(this.formLabelAlign.name);
-                
+
                 //  to do 调用添加事件函数
                 this.$message.success('添加成功');
                 this.$refs.addFormRef.resetFields();
@@ -157,22 +157,22 @@ export default {
             }
             this.listRelationTypes();
         },
-        async add(name){
+        async add(name) {
             let self = this;
-            let post_data = {"type":name};
+            let post_data = { "type": name };
             const resp = await this.$http.post("/Relation/AddType", post_data);
             if (!resp.data.success) {
                 this.$message.error(resp.data.msg);
-            } 
+            }
             // 刷新列表
             this.listRelationTypes()
         },
-        async edit(id,name){
-            let post_data = {'id':id,'type':name};
+        async edit(id, name) {
+            let post_data = { 'id': id, 'type': name };
             const resp = await this.$http.post("/Relation/EditType", post_data);
             if (!resp.data.success) {
                 this.$message.error(resp.data.msg);
-            } 
+            }
             // 刷新列表
             this.listRelationTypes()
         }
