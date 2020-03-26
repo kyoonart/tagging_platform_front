@@ -57,9 +57,9 @@ export default {
             } else {
                 start = '0'
             }
-            start = index;
+          //  start = index;
             let selectedText = this.getSelectionText()
-            let end = selectedText.length + index
+            let end = selectedText.length + start
             console.log(`start:${start},end : ${end}, selected:${selectedText}`);
 
         },
@@ -99,15 +99,15 @@ export default {
 
             console.log(this.results)
         },
-        getSelectionText() {
-            let selectedText = ''
-            if (window.getSelection) {
-                selectedText = window.getSelection().toString();
-            } else if (document.selection && document.selection.createRange) {
-                selectedText = document.selection.createRange().text;
-            }
-            return selectedText;
-        },
+        // getSelectionText() {
+        //    let selectedText = ''
+        //    if (window.getSelection) {
+        //       selectedText = window.getSelection().toString();
+        //    } else if (document.selection && document.selection.createRange) {
+        //       selectedText = document.selection.createRange().text;
+        //  }
+        //  return selectedText;
+        // },
 
         handleClose(entity) {
             let result = this.results.filter(item => {
@@ -146,7 +146,7 @@ export default {
             }
         },
         async getSentence() {
-            init();
+            this.init();
             let post_data = { referer: "entity" };
             const resp = await this.$http.post('/Sentence/Get', post_data)
             if (resp.data.success) {
