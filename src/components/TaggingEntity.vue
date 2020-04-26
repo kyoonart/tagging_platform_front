@@ -4,18 +4,20 @@
         <textarea @click="getTextIndex" v-model="sentence" />
     </div>
 
-    <div class="box2">
+    <!-- <div class="box2">
         <div style="margin-top: 20px">
-            <el-tag v-for="(result,index) in results" :key="result.id" type="success" closable @close="handleClose(result,index)">
+            <el-tag v-for="(result,index) in results" :key="result.id"
+            type="success" closable @close="handleClose(result,index)">
                 {{result.entity}}
             </el-tag>
         </div>
-    </div>
+    </div> -->
 
     <div class="box2">
         <div style="margin-top: 20px">
             <el-radio-group v-model="padding" @change="handleSelectType">
-                <el-radio-button v-for=" type in entityTypes" :label="type.id" :key="type.name">
+                <el-radio-button v-for=" type in entityTypes" :label="type.id"
+                :key="type.name">
                     {{type.name}}
                 </el-radio-button>
             </el-radio-group>
@@ -31,16 +33,13 @@
 export default {
     data() {
         return {
-
             entityTypes: [],
             padding: [],
-
             sentence: '',
             sentence_id: 0,
             pos: '',
             results: [],
             order: 0
-
         };
 
     },
@@ -57,7 +56,7 @@ export default {
             } else {
                 start = '0'
             }
-          //  start = index;
+            //  start = index;
             let selectedText = this.getSelectionText()
             let end = selectedText.length + start
             console.log(`start:${start},end : ${end}, selected:${selectedText}`);
@@ -67,7 +66,9 @@ export default {
             let selectedText = ''           
             if (window.getSelection) {       
                 selectedText = window.getSelection().toString();        
-            } else if (document.selection && document.selection.createRange) {            selectedText = document.selection.createRange().text;            }       
+            } else if (document.selection && document.selection.createRange) {       
+                   selectedText = document.selection.createRange().text;  
+                         }       
             return selectedText;       
         },
         handleChange(value) {
@@ -88,7 +89,6 @@ export default {
                     return 0;
                 }
             }
-
             this.results.push({
                 id: this.order,
                 sentence_id: this.sentence_id,
@@ -99,16 +99,6 @@ export default {
 
             console.log(this.results)
         },
-        // getSelectionText() {
-        //    let selectedText = ''
-        //    if (window.getSelection) {
-        //       selectedText = window.getSelection().toString();
-        //    } else if (document.selection && document.selection.createRange) {
-        //       selectedText = document.selection.createRange().text;
-        //  }
-        //  return selectedText;
-        // },
-
         handleClose(entity) {
             let result = this.results.filter(item => {
                 return item['id'] !== entity.id
@@ -116,14 +106,11 @@ export default {
             this.results = result
             console.log(this.results)
         },
-
-
         handleSelectType(value) {
             // 这里可以拿到选中的标
             console.log(value);
 
         },
-
         handleSave() {
             // let query={
             //   sentence_id:
@@ -146,12 +133,14 @@ export default {
             }
         },
         async getSentence() {
-            this.init();
+         this.init();
             let post_data = { referer: "entity" };
             const resp = await this.$http.post('/Sentence/Get', post_data)
             if (resp.data.success) {
                 this.sentence = resp.data.data[0].content;
-                this.sentence_id = resp.data.data[0].id
+                this.sentence_id = resp.data.data[0].id;
+                console.log(resp.data)
+
             } else {
                 console.log(resp.data);
                 this.$message.error(resp.data.msg);
@@ -171,7 +160,7 @@ export default {
 
 .box2 {
     width: 80%;
-    height: 100px;
+
     border: 1px solid #ccc;
     background-color: #fff;
     margin: 10px auto

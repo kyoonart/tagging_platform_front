@@ -1,13 +1,5 @@
 <template>
 <div>
-    <!-- <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
-        <span>标注实体:</span>
-        <span class="content">2333</span>
-        <span slot="footer" class="dialog-footer">
-    <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-  </span>
-    </el-dialog> -->
     <p>全部句子数：{{all_num.all}} ，完成打标句子数：{{all_num.done}}，未完成打标句子数：{{all_num.doing}} </p>
     <p>全部实体打标数：{{entity_num.all}} ，完成打标句子数：{{entity_num.done}}，未完成打标句子数：{{entity_num.doing}} </p>
     <p>全部关系打标数：{{relation_num.all}} ，完成打标句子数：{{relation_num.done}}，未完成打标句子数：{{relation_num.doing}} </p>
@@ -39,14 +31,6 @@
         align="right">
     <template slot="header">
     </template>
-
-<!-- 
-<template slot-scope="scope">
-<el-button size="mini" type='primary' @click="handleEdit(scope.$index, scope.row)">
-    Edit</el-button>
-<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
-</template>
- -->
     </el-table-column>
   </el-table>
 </template>

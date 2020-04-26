@@ -4,7 +4,8 @@
     <div class="box2">
   <div style="margin-top: 20px">
     <el-checkbox-group v-model="entityTypes[0]" size="small">
-      <el-checkbox-button v-for="type in entityTypes" :label="type"  :key="type.id">{{type.name}}</el-checkbox-button>
+      <el-checkbox-button v-for="type in entityTypes" :label="type"  
+      :key="type.id">{{type.name}}</el-checkbox-button>
     </el-checkbox-group>
   </div>
     </div>

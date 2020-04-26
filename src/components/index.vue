@@ -7,6 +7,9 @@
 </template>
 <script>
 export default {
+    components:{
+    },
+
     methods: {
         handleChange(data) {
             this.$router.push(data)
@@ -16,8 +19,8 @@ export default {
 </script>
 
 <style scoped>
-.btn {
+/* .btn {
     width: 120px;
     margin: 180px auto;
-}
+} */
 </style>
