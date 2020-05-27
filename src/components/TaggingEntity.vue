@@ -4,15 +4,6 @@
         <textarea @click="getTextIndex" v-model="sentence" />
     </div>
 
-    <!-- <div class="box2">
-        <div style="margin-top: 20px">
-            <el-tag v-for="(result,index) in results" :key="result.id"
-            type="success" closable @close="handleClose(result,index)">
-                {{result.entity}}
-            </el-tag>
-        </div>
-    </div> -->
-
     <div class="box2">
         <div style="margin-top: 20px">
             <el-radio-group v-model="padding" @change="handleSelectType">

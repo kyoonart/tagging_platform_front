@@ -11,11 +11,17 @@ import RelationType from '../components/RelationType.vue'
 import RelationHistory from '../components/RelationHistory.vue'
 import TaggingRelation from '../components/TaggingRelation.vue'
 import Sentence from '../components/Sentence.vue'
+import test from '../components/test.vue'
+import test1 from '../components/test1.vue'
 Vue.use(VueRouter)
 const routes = [{
         path: '/',
         name: 'Home',
         redirect: '/home'
+    },
+    {
+        path: '/test',
+        component: test,
     },
     {
         path: '/home',
