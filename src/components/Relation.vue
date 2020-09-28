@@ -1,7 +1,7 @@
 <template>
 <div>
     <el-button type="primary" class="start btn" @click="handleChangex">开始打标</el-button>
-  <el-button type="primary" class="view btn" @click="handleChangey">查看类型</el-button>
+    <el-button type="primary" class="view btn" @click="handleChangey">查看类型</el-button>
     <el-button type="primary" class="history btn" @click="handleChang">历史数据</el-button>
     <div class="box">
         <div class="box1">
@@ -12,8 +12,8 @@
             <div>
                 <ul>
                     <li v-for="sentence in sentencesDone" :key="sentence.kid">
-                        <span class="id">{{sentence.id}}</span>
-                        <span class="content">{{sentence.content}}</span>
+                        <span class="id">{{ sentence.id }}</span>
+                        <span class="content">{{ sentence.content }}</span>
                     </li>
                 </ul>
             </div>
@@ -26,61 +26,60 @@
             <div>
                 <ul>
                     <li v-for="sentence in sentencesDoing" :key="sentence.kid">
-                        <span class="id">{{sentence.id}}</span>
-                        <span class="content">{{sentence.content}}</span>
+                        <span class="id">{{ sentence.id }}</span>
+                        <span class="content">{{ sentence.content }}</span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-
 </div>
 </template>
 
 <script>
 export default {
-    data(){
-            return {
-                sentencesDoing: [],
-                sentencesDone: [],
-            }
-        },
-    created(){
+    data() {
+        return {
+            sentencesDoing: [],
+            sentencesDone: []
+        };
+    },
+    created() {
         this.listRelationSentencesDone();
         this.listRelationSentencesDoing();
     },
     methods: {
         handleChang() {
-            this.$router.push('/relationHistory')
+            this.$router.push("/relationHistory");
         },
         handleChangex() {
-            this.$router.push('/taggingRelation')
+            this.$router.push("/taggingRelation");
         },
-        handleChangey(){
-             this.$router.push('/relationType')
+        handleChangey() {
+            this.$router.push("/relationType");
         },
-        async listRelationSentencesDoing(){
-            let post_data = { referer: 'relation', page: 0, limit: 10 };
-            const resp = await this.$http.post('/Sentence/Doing',post_data)
-            if(resp.data.success){
+        async listRelationSentencesDoing() {
+            let post_data = { referer: "relation", page: 0, limit: 10 };
+            const resp = await this.$http.post("/Sentence/Doing", post_data);
+            if (resp.data.success) {
                 this.sentencesDoing = resp.data.data;
-            }else{
+            } else {
                 this.$message.error(resp.data.msg);
                 console.log(resp.data);
             }
         },
-        async listRelationSentencesDone(){
-            let post_data = { referer: 'relation', page: 0, limit: 10 };
-            const resp= await this.$http.post('/Sentence/Done',post_data)
-            if(resp.data.success){
+        async listRelationSentencesDone() {
+            let post_data = { referer: "relation", page: 0, limit: 10 };
+            const resp = await this.$http.post("/Sentence/Done", post_data);
+            if (resp.data.success) {
                 this.sentencesDone = resp.data.data;
-            }else{
+            } else {
                 console.log(resp.data);
                 this.$message.error(resp.data.msg);
             }
-            },
+        }
     }
-}
+};
 </script>
 
 <style scoped>
@@ -90,27 +89,28 @@ export default {
 
 .start {
     position: relative;
-    /* top: -180px; */
-    left: -240px
+    left: -240px;
 }
-.view{
+
+.view {
     position: relative;
-    left: -20px
+    left: -20px;
 }
+
 .history {
     position: relative;
-    /* top: -180px; */
-    right: -240px
+    right: -240px;
 }
-.title{
-    margin-top: -10px
+
+.title {
+    margin-top: -10px;
 }
+
 .box1,
 .box2 {
     margin-top: 20px;
     border: 1px solid #ccc;
     background-color: #ffffff;
-    /* margin-right: 20px */
 }
 
 ul li .id {
@@ -123,14 +123,15 @@ ul li .id {
 ul li:nth-child(1) {
     border-top: 1px solid #ccc;
 }
+
 .box1 #idTitle,
 .box2 #idTitle {
     position: relative;
-    left: -430px
+    left: -430px;
 }
 
 ul li .content {
-    flex: 10
+    flex: 10;
 }
 
 .box {
@@ -140,13 +141,12 @@ ul li .content {
 
 .box .done {
     color: green;
-    /* line-height: 40px; */
     display: inline-block;
 }
 
 ul {
     margin-top: -20px;
-    margin-left: -40px
+    margin-left: -40px;
 }
 
 ul li {
@@ -158,8 +158,6 @@ ul li {
 
 .box2 .undone {
     color: red;
-    /* line-height: 40px; */
-    display: inline-block
+    display: inline-block;
 }
 </style>
-
