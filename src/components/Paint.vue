@@ -115,15 +115,15 @@ export default {
   left: 40px;
 }
 .node .node:last-child:before {
-  transform: translate(3px, -46.24428900898052px)
-    rotate(-0.41822432957922895rad);
+  transform: translate(3px, -46.2px)
+    rotate(-0.41rad);
 }
 .node .node:first-child {
   left: -40px;
 }
 .node .node:first-child:before {
-  transform: translate(45px, -44.24428900898052px)
-    rotate(0.41822432957922895rad);
+  transform: translate(45px, -44.2px)
+    rotate(0.41rad);
 }
 .R {
   left: 200px;
